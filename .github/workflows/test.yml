@@ -23,3 +23,4 @@ jobs:
         run: |
             echo ${{ steps.vars.outputs.ENV_FILE }}
             echo ${{ steps.vars.outputs.PYTHON_BIN }}
+            echo ${{ hashFiles(steps.vars.outputs.ENV_FILE) }}
