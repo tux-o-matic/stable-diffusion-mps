@@ -1,9 +1,6 @@
-name: Build
-on: 
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+name: Test Dream
+on:
+  workflow_dispatch
 jobs:
   build:
     strategy:
@@ -34,19 +31,19 @@ jobs:
           if [ ! -e models/ldm/stable-diffusion-v1/model.ckpt ]; then
             curl -o models/ldm/stable-diffusion-v1/model.ckpt ${{ secrets.SD_V1_4_URL }}
           fi
-# Uncomment this when we no longer make changes to environment-mac.yaml
-#       - name: Cache environment
-#         id: cache-conda-env-ldm
-#         uses: actions/cache@v3
-#         env:
-#           cache-name: cache-conda-env-ldm
-#         with:
-#           path: ~/.conda/envs/ldm
-#           key: ${{ env.cache-name }}
-#           restore-keys: |
-#             ${{ env.cache-name }}
+
+      - name: Cache environment
+        id: cache-conda-env-ldm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-conda-env-ldm
+        with:
+          path: ~/.conda/envs/ldm
+          key: ${{ env.cache-name }}
+          restore-keys: |
+            ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       - name: Install dependencies
-#         if: ${{ steps.cache-conda-env-ldm.outputs.cache-hit != 'true' }}
+        if: ${{ steps.cache-conda-env-ldm.outputs.cache-hit != 'true' }}
         run: |
           if [ $(uname) = "Darwin" ]; then
               conda env create -f environment-mac.yaml

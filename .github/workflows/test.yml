@@ -15,6 +15,5 @@ jobs:
         run: |
             echo $RUNNER_OS
       - name: Set environment file
-        id: environment-file
         run: |
-            echo ${{ jobs.environment-file.outputs }}
+            echo ${{ steps.environment-file.outputs }}
