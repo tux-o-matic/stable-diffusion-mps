@@ -13,8 +13,8 @@ jobs:
       - name: Set environment file
         id: vars
         run: |
-            Write-Output "::set-output name=PLAT1::$RUNNER_OS"
-            Write-Output "::set-output name=PLAT2::$(uname)"
+            echo "::set-output name=PLAT1::$RUNNER_OS"
+            echo "::set-output name=PLAT2::$(uname)"
       - name: Set environment file
         run: |
             echo ${{ steps.vars.outputs.PLAT1 }}
