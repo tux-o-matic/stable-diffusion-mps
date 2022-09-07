@@ -9,13 +9,17 @@ jobs:
     name: Simple test
     runs-on: ${{ matrix.os }}
     steps:
-
-      - name: Set environment file
+      - name: Set vars
         id: vars
         run: |
-            echo "::set-output name=PLAT1::$RUNNER_OS"
-            echo "::set-output name=PLAT2::$(uname)"
+            if [ "$RUNNER_OS" = "macOS" ]; then
+                echo "::set-output name=ENV_FILE::environment-mac.yaml"
+                echo "::set-output name=PYTHON_BIN::/usr/local/miniconda/envs/ldm/bin/python"
+            elif [ "$RUNNER_OS" = "Linux" ]; then
+                echo "::set-output name=ENV_FILE::environment.yaml"
+                echo "::set-output name=PYTHON_BIN::/usr/share/miniconda/envs/ldm/bin/python"
+            fi
       - name: Set environment file
         run: |
-            echo ${{ steps.vars.outputs.PLAT1 }}
-            echo ${{ steps.vars.outputs.PLAT2 }}
+            echo ${{ steps.vars.outputs.ENV_FILE }}
+            echo ${{ steps.vars.outputs.PYTHON_BIN }}
