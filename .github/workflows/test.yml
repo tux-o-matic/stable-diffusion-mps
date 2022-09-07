@@ -1,0 +1,29 @@
+name: Test
+on:
+  workflow_dispatch
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-12 ]
+    name: Simple test
+    steps:
+      - name: set var
+        run: |
+          export PLATFORM=$(uname)
+          TEST1=1
+          if [ $PLATFORM = "Darwin" ]; then
+              export TEST2=2
+              TEST3=3
+          else
+              export TEST4=4
+              TEST5=5
+          fi
+      - name: print var
+        run: |
+          echo $PLATFORM
+          echo $TEST1
+          echo $TEST2
+          echo $TEST3
+          echo $TEST4
+          echo $TEST5
