@@ -9,22 +9,12 @@ jobs:
     name: Simple test
     runs-on: ${{ matrix.os }}
     steps:
-      - name: set var
+
+      - name: Set environment file
+        id: environment-file
         run: |
-          export PLATFORM=$(uname)
-          TEST1=1
-          if [ $PLATFORM = "Darwin" ]; then
-              export TEST2=2
-              TEST3=3
-          else
-              export TEST4=4
-              TEST5=5
-          fi
-      - name: print var
+            echo $RUNNER_OS
+      - name: Set environment file
+        id: environment-file
         run: |
-          echo $PLATFORM
-          echo $TEST1
-          echo $TEST2
-          echo $TEST3
-          echo $TEST4
-          echo $TEST5
+            echo ${{ jobs.environment-file.outputs }}
