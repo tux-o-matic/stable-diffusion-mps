@@ -70,6 +70,9 @@ jobs:
         continue-on-error: true
         run: |
           ${{ steps.vars.outputs.PYTHON_BIN }} scripts/preload_models.py
+      - name: Run tmate
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 30
       - name: Run the tests
         run: |
           # Note, can't "activate" via automation, and activation is just env vars and path
