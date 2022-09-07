@@ -5,8 +5,8 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-12 ]
-    name: Build on ${{ matrix.os }} miniconda
+        os: [ ubuntu-latest ]
+    name: Build on ${{ matrix.os }} conda
     runs-on: ${{ matrix.os }}
     steps:
       - name: Set platform variables
