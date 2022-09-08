@@ -64,7 +64,7 @@ jobs:
           path: ~/.cache
           key: ${{ env.cache-name }}
           restore-keys: |
-            ${{ env.cache-name }}
+            ${{ env.cache-name }}-${{ hashFiles('scripts/preload_models.py') }}
       - name: Download Huggingface and Torch models
         if: ${{ steps.cache-hugginface-torch.outputs.cache-hit != 'true' }}
         continue-on-error: true
