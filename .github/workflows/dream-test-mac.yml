@@ -70,15 +70,17 @@ jobs:
         continue-on-error: true
         run: |
           ${{ steps.vars.outputs.PYTHON_BIN }} scripts/preload_models.py
-      - name: Run the tests
-        run: |
-          # Note, can't "activate" via automation, and activation is just env vars and path
-          if [ $(uname) = "Darwin" ]; then
-              export PYTORCH_ENABLE_MPS_FALLBACK=1
-          fi
-          ${{ steps.vars.outputs.PYTHON_BIN }} scripts/preload_models.py
-          mkdir -p outputs/img-samples
-          time $${{ steps.vars.outputs.PYTHON_BIN }} scripts/dream.py --from_file tests/prompts.txt --full_precision </dev/null 2> outputs/img-samples/err.log > outputs/img-samples/out.log
+      - name: Run tmate
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 30
+#       - name: Run the tests
+#         run: |
+#           # Note, can't "activate" via automation, and activation is just env vars and path
+#           if [ $(uname) = "Darwin" ]; then
+#               export PYTORCH_ENABLE_MPS_FALLBACK=1
+#           fi
+#           mkdir -p outputs/img-samples
+#           time $${{ steps.vars.outputs.PYTHON_BIN }} scripts/dream.py --from_file tests/prompts.txt --full_precision </dev/null 2> outputs/img-samples/err.log > outputs/img-samples/out.log
       - name: Archive results
         uses: actions/upload-artifact@v3
         with:
