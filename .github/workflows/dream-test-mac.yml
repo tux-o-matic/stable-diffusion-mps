@@ -5,7 +5,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [  macos-12 ]
+        os: [ macos-12 ]
     name: Build on ${{ matrix.os }} conda
     runs-on: ${{ matrix.os }}
     steps:
@@ -21,7 +21,7 @@ jobs:
             fi
       - name: Checkout sources
         uses: actions/checkout@v3
-      - name: Cache model
+      - name: Use Cached Stable Diffusion v1.4 Model
         id: cache-sd-v1-4
         uses: actions/cache@v3
         env:
@@ -31,7 +31,7 @@ jobs:
           key: ${{ env.cache-name }}
           restore-keys: |
             ${{ env.cache-name }}
-      - name: Download Stable Diffusion v1.4 model
+      - name: Download Stable Diffusion v1.4 Model
         if: ${{ steps.cache-sd-v1-4.outputs.cache-hit != 'true' }}
         continue-on-error: true
         run: |
@@ -41,7 +41,7 @@ jobs:
           if [ ! -e models/ldm/stable-diffusion-v1/model.ckpt ]; then
             curl -o models/ldm/stable-diffusion-v1/model.ckpt ${{ secrets.SD_V1_4_URL }}
           fi
-      - name: Cache environment
+      - name: Use Cached Dependencies
         id: cache-conda-env-ldm
         uses: actions/cache@v3
         env:
@@ -51,11 +51,11 @@ jobs:
           key: ${{ env.cache-name }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles(steps.vars.outputs.ENV_FILE) }}
-      - name: Install dependencies
+      - name: Install Dependencies
         if: ${{ steps.cache-conda-env-ldm.outputs.cache-hit != 'true' }}
         run: |
           conda env create -f ${{ steps.vars.outputs.ENV_FILE }}
-      - name: Cache hugginface and torch models
+      - name: Use Cached Huggingface and Torch models
         id: cache-hugginface-torch
         uses: actions/cache@v3
         env:
@@ -78,7 +78,7 @@ jobs:
           fi
           ${{ steps.vars.outputs.PYTHON_BIN }} scripts/preload_models.py
           mkdir -p outputs/img-samples
-          time $${{ steps.vars.outputs.PYTHON_BIN }} scripts/dream.py --from_file tests/prompts.txt </dev/null 2> outputs/img-samples/err.log > outputs/img-samples/out.log
+          time $${{ steps.vars.outputs.PYTHON_BIN }} scripts/dream.py --from_file tests/prompts.txt --full_precision </dev/null 2> outputs/img-samples/err.log > outputs/img-samples/out.log
       - name: Archive results
         uses: actions/upload-artifact@v3
         with:
