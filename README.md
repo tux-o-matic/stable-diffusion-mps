@@ -1,4 +1,3 @@
-<h1 align='center'><b>Stable Diffusion Dream Script</b></h1>
 # **Stable Diffusion Dream Script**
 
 This is a fork of a fork of
