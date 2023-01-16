@@ -14,7 +14,8 @@ the open source text-to-image generator. It focuses purely on the macOS Metal ba
 # Disclaimer
 The code might be open source, what you choose to generate and eventually share might make you liable.
 Generating images using stable diffusion doesn't make you an artist.
-Be careful of sources used by your model. It may have been generated using protected/copyrighted material
+
+Be careful of sources used by your model. It may have been generated using protected/copyrighted material.
 
 # Installation
 This repo doesn't rely on Anaconda. It is unnecessary since other dependencies that it can't install and is more bloated than pip.
