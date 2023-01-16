@@ -48,6 +48,8 @@ cd stable-diffusion-mps
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+export PYTORCH_ENABLE_MPS_FALLBACK=1
+export PYTHONPATH="$PYTHONPATH:$PWD/ldm/"
 ```
 The requirements file will use other sub requimrents file. It will also force compilation of NumPy to make use of Apple's vecLib optimized for Apple Silicon instead of NumPy wheel for Darwin arm64 which lacks such optimization.
 
