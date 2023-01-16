@@ -2,7 +2,7 @@
 
 This is a fork of a fork of
 [CompVis/stable-diffusion](https://github.com/CompVis/stable-diffusion),
-the open source text-to-image generator. It focuses purely on the macOS Metal backend (MPS) support.
+the open source text-to-image generator. It focuses purely on the macOS Metal backend (MPS) support and doing so without Conda and newer Python.
 
 # **Table of Contents**
 
@@ -10,23 +10,56 @@ the open source text-to-image generator. It focuses purely on the macOS Metal ba
 2. [Major Features](#features)
 3. [Changelog](#latest-changes)
 4. [Troubleshooting](#troubleshooting)
-5. [Contributing](#contributing)
-6. [Support](#support)
+
+# Disclaimer
+The code might be open source, what you choose to generate and eventually share might make you liable.
+Generating images using stable diffusion doesn't make you an artist.
+Be careful of sources used by your model. It may have been generated using protected/copyrighted material
 
 # Installation
+This repo doesn't rely on Anaconda. It is unnecessary since other dependencies that it can't install and is more bloated than pip.
 
-- ## [Macintosh](docs/installation/INSTALL_MAC.md)
+## System dependencies 
+Of course Xcode with command line tools.
+Then ports needed by various Python modules: 
+```shell
+sudo port install rust cargo protobuf-c curl-ca-bundle cmake
+```
+(or equivalent with HomeBrew)
+
+This repo is tested on both Python 3.9 and 3.10, choose what works best for you:
+```shell
+sudo port install python310 py310-pip
+```
+
+If for some reason pip cannot find a wheel for SciPy, you will need extra ports to compile it.
+```shell
+sudo port install OpenBLAS gcc12 +gfortran
+sudo port select --set gcc mp-gcc12
+```
+
+## Python environment
+With all system depdencies installed, proceed with the project Python enivornment.
+(make sure that `python3` is an alias to the right Python version you want)
+```shell
+git clone https://github.com/tux-o-matic/stable-diffusion-mps.git
+cd stable-diffusion-mps
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+The requirements file will use other sub requimrents file. It will also force compilation of NumPy to make use of Apple's vecLib optimized for Apple Silicon instead of NumPy wheel for Darwin arm64 which lacks such optimization.
+
 
 ## **Hardware Requirements**
 
 **System**
 
-You wil need one of the following:
-- An Apple computer with Apple Silicon (not tested on Intel Mac with AMD dGPU).
+You wil need an Apple computer with Apple Silicon (not tested on Intel Mac with AMD dGPU).
 
 **Memory**
 
-- At least 12 GB Main Memory RAM.
+- At least 8 GB Main Memory RAM.
 
 **Disk**
 
@@ -115,18 +148,6 @@ Anyone who wishes to contribute to this project, whether documentation, features
 how to contribute to GitHub projects, here is a [Getting Started Guide](https://opensource.com/article/19/7/create-pull-request-github).
 
 A full set of contribution guidelines, along with templates, are in progress, but for now the most important thing is to **make your pull request against the "development" branch**, and not against "main". This will help keep public breakage to a minimum and will allow you to propose more radical changes.
-
-## **Contributors**
-
-This fork is a combined effort of various people from across the world. [Check out the list of all these amazing people](docs/CONTRIBUTORS.md). We thank them for their time, hard work and effort.
-
-# Support
-
-For support,
-please use this repository's GitHub Issues tracking service. Feel free
-to send me an email if you use and like the script.
-
-Original portions of the software are Copyright (c) 2020 Lincoln D. Stein (https://github.com/lstein)
 
 # Further Reading
 
