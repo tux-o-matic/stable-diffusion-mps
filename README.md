@@ -1,30 +1,9 @@
 <h1 align='center'><b>Stable Diffusion Dream Script</b></h1>
-
-<p align='center'>
-<img src="docs/assets/logo.png"/>
-</p>
-
-<p align="center">
-    <img src="https://img.shields.io/github/last-commit/lstein/stable-diffusion?logo=Python&logoColor=green&style=for-the-badge" alt="last-commit"/>
-    <img src="https://img.shields.io/github/stars/lstein/stable-diffusion?logo=GitHub&style=for-the-badge" alt="stars"/>
-    <br>
-    <img src="https://img.shields.io/github/issues/lstein/stable-diffusion?logo=GitHub&style=for-the-badge" alt="issues"/>
-    <img src="https://img.shields.io/github/issues-pr/lstein/stable-diffusion?logo=GitHub&style=for-the-badge" alt="pull-requests"/>
-</p>
-
 # **Stable Diffusion Dream Script**
 
-This is a fork of
+This is a fork of a fork of
 [CompVis/stable-diffusion](https://github.com/CompVis/stable-diffusion),
-the open source text-to-image generator. It provides a streamlined
-process with various new features and options to aid the image
-generation process. It runs on Windows, Mac and Linux machines,
-and runs on GPU cards with as little as 4 GB or RAM.
-
-_Note: This fork is rapidly evolving. Please use the
-[Issues](https://github.com/lstein/stable-diffusion/issues) tab to
-report bugs and make feature requests. Be sure to use the provided
-templates. They will help aid diagnose issues faster._
+the open source text-to-image generator. It focuses purely on the macOS Metal backend (MPS) support.
 
 # **Table of Contents**
 
@@ -37,10 +16,6 @@ templates. They will help aid diagnose issues faster._
 
 # Installation
 
-This fork is supported across multiple platforms. You can find individual installation instructions below.
-
-- ## [Linux](docs/installation/INSTALL_LINUX.md)
-- ## [Windows](docs/installation/INSTALL_WINDOWS.md)
 - ## [Macintosh](docs/installation/INSTALL_MAC.md)
 
 ## **Hardware Requirements**
@@ -48,9 +23,7 @@ This fork is supported across multiple platforms. You can find individual instal
 **System**
 
 You wil need one of the following:
-
-- An NVIDIA-based graphics card with 4 GB or more VRAM memory.
-- An Apple computer with an M1 chip.
+- An Apple computer with Apple Silicon (not tested on Intel Mac with AMD dGPU).
 
 **Memory**
 
@@ -61,9 +34,6 @@ You wil need one of the following:
 - At least 6 GB of free disk space for the machine learning model, Python, and all its dependencies.
 
 **Note**
-
-If you are have a Nvidia 10xx series card (e.g. the 1080ti), please
-run the dream script in full-precision mode as shown below.
 
 Similarly, specify full-precision mode on Apple M1 hardware.
 
