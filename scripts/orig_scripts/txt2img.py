@@ -56,6 +56,13 @@ def main():
         help="the prompt to render"
     )
     parser.add_argument(
+        "--negatives",
+        type=str,
+        nargs="?",
+        default="",
+        help="the negative prompt to render"
+    )
+    parser.add_argument(
         "--outdir",
         type=str,
         nargs="?",
@@ -262,9 +269,9 @@ def main():
                 all_samples = list()
                 for n in trange(opt.n_iter, desc="Sampling"):
                     for prompts in tqdm(data, desc="data"):
-                        uc = None
-                        if opt.scale != 1.0:
-                            uc = model.get_learned_conditioning(batch_size * [""])
+                        if isinstance(opt.negatives, tuple):
+                            opt.negatives = list(opt.negatives)
+                        uc = model.get_learned_conditioning(opt.negatives)
                         if isinstance(prompts, tuple):
                             prompts = list(prompts)
                         c = model.get_learned_conditioning(prompts)
