@@ -35,7 +35,8 @@ sudo port install python310 py310-pip
 
 If for some reason pip cannot find a wheel for SciPy, you will need extra ports to compile it.
 ```shell
-sudo port install OpenBLAS gcc12 +gfortran
+sudo port install gcc12 +gfortran
+sudo port install OpenBLAS +native
 sudo port select --set gcc mp-gcc12
 ```
 
